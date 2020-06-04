@@ -8,19 +8,19 @@
 <div align = "center">
     <h1>Create New User</h1>
     <br/>
-    <form action="#" th:action="@{/saveUser}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/user/saveUser}" th:object="${user}" method="post">
         <table border="0" cellpadding="3">
             <tr>
                 <td>ID:</td>
-                <td><input type="text" th:field="*{user_id}" readonly="readonly"/></td>
+                <td><input type="text" th:field="*{userId}" readonly="readonly"/></td>
             </tr>
             <tr>
                 <td>First Name:</td>
-                <td><input type="text" th:field="*{fname}"/></td>
+                <td><input type="text" th:field="*{fName}"/></td>
             </tr>
             <tr>
                 <td>Last Name:</td>
-                <td><input type="text" th:field="*{lname}"/></td>
+                <td><input type="text" th:field="*{lName}"/></td>
             </tr>
             <tr>
                 <td>Login:</td>
@@ -44,7 +44,7 @@
             </tr>
             <tr>
                 <td>Date of Birth:</td>
-                <td><input type="text" th:field="*{birth_date}"/></td>
+                <td><input type="text" th:field="*{birthDate}"/></td>
             </tr>
             <tr>
                 <td>Perm:</td>

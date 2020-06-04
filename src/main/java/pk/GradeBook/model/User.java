@@ -1,9 +1,6 @@
 package pk.GradeBook.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -11,40 +8,55 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Column(name="user_id")
+    private Long userId;
 
-    private String fname;
-    private String lname;
+    @Column(name="fname")
+    private String fName;
+    @Column(name ="lname")
+    private String lName;
     private String login;
     private String password;
     private String email;
     private String phone;
     private String pesel;
-    private Date birth_date;
+    @Column(name="birth_date")
+    private Date birthDate;
     private int perm;
 
-    public Long getUser_id() {
-        return user_id;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getFname() {
-        return fname;
+    public User() {
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public Long getUserId() {
+        return userId;
     }
 
-    public String getLname() {
-        return lname;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public String getfName() {
+        return fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
     }
 
     public String getLogin() {
@@ -63,14 +75,6 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -87,12 +91,12 @@ public class User {
         this.pesel = pesel;
     }
 
-    public Date getBirth_date() {
-        return birth_date;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirth_date(Date birth_date) {
-        this.birth_date = birth_date;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public int getPerm() {
