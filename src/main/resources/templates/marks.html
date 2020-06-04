@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Marks</title>
+</head>
+<body>
+<div align="center">
+    <h1>Marks</h1>
+
+    <!--    table ma <th> - kolumna i <td> - element-->
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>mark ID</th>
+            <th>user ID</th>
+            <th>subject ID</th>
+            <th>attendance</th>
+            <th>late</th>
+            <th>mark date</th>
+            <th>grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="mark : ${marks}">
+            <td th:text="${mark.markId}">mark ID</td>
+            <td th:text="${mark.userId}">user ID</td>
+            <td th:text="${mark.subjectId}">subject ID</td>
+            <td th:text="${mark.attendance}">attendance</td>
+            <td th:text="${mark.late}">late</td>
+            <td th:text="${mark.markDate}">mark date</td>
+            <td th:text="${mark.grade}">grade</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
