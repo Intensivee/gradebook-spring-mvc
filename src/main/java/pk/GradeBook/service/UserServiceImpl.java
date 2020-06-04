@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> listAll() {
+    public List<User> findAll() {
         return repo.findAll();
     }
 
@@ -25,13 +25,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(long id) {
-        //repo.findById(id).isPresent()
-        return repo.findById(id).get();
+    public User findById(long id) {
+        if (repo.findById(id).isPresent()) {
+            return repo.findById(id).get();
+        }
+        else{
+            return new User();
+        }
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         repo.deleteById(id);
     }
 }

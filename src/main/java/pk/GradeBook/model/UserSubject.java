@@ -7,13 +7,23 @@ import javax.persistence.*;
 public class UserSubject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_subject_id")
+    private Long userSubjectId;
     @Column(name = "user_id")
     private Long userId;
     @Column(name = "subject_id")
     private Long subjectId;
 
     public UserSubject() {
+    }
+
+    public Long getUserSubjectId() {
+        return userSubjectId;
+    }
+
+    public void setUserSubjectId(Long userSubjectId) {
+        this.userSubjectId = userSubjectId;
     }
 
     public Long getUserId() {

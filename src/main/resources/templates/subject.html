@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subjects</title>
+</head>
+<body>
+<div align="center">
+    <h1>Subjects</h1>
+
+    <!--    table ma <th> - kolumna i <td> - element-->
+    <table border="1" cellpadding="10">
+        <a href="newUser">Create New User</a>
+        <br/><br/>
+        <thead>
+        <tr>
+            <th>Subject id</th>
+            <th>Subject name</th>
+            <th>Class name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subject : ${subjects}">
+            <td th:text="${subject.subjectId}">ID</td>
+            <td th:text="${subject.subjectName}">First Name</td>
+            <td th:text="${subject.className}">Last Name</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

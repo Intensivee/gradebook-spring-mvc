@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import pk.GradeBook.repository.UserSubjectRepository;
 
 @Service
-public class UserSubjectServiceImpl {
+public class UserSubjectServiceImpl implements UserSubjectService{
     @Autowired
     private UserSubjectRepository repo;
 }

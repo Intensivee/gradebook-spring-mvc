@@ -10,8 +10,7 @@
 
 <!--    table ma <th> - kolumna i <td> - element-->
     <table border="1" cellpadding="10">
-        <a href="newUser">Create New User</a>
-        <br/><br/>
+        <a href="/user/newUser">Create New User</a>
         <thead>
             <tr>
                 <th>User ID</th>
@@ -29,21 +28,21 @@
         </thead>
         <tbody>
             <tr th:each="user : ${users}">
-                <td th:text="${user.user_id}">Product ID</td>
-                <td th:text="${user.fname}">First Name</td>
-                <td th:text="${user.lname}">Last Name</td>
+                <td th:text="${user.userId}">Product ID</td>
+                <td th:text="${user.fName}">First Name</td>
+                <td th:text="${user.lName}">Last Name</td>
                 <td th:text="${user.login}">Login</td>
                 <td th:text="${user.password}">Password</td>
                 <td th:text="${user.email}">Email</td>
                 <td th:text="${user.phone}">Phone</td>
-                <td th:text="${user.Pesel}">Pesel</td>
-                <td th:text="${user.birth_date}">Birth Date</td>
+                <td th:text="${user.pesel}">Pesel</td>
+                <td th:text="${user.birthDate}">Birth Date</td>
                 <td th:text="${user.perm}">Permission</td>
                 <td>
-                    <a th:href="@{'/editUser/' + ${user.user_id}}">Edit</a>
+                    <a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a>
 <!--                    dodaje spacje-->
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a th:href="@{'/deleteUser/' + ${user.user_id}}">Delete</a>
+                    <a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a>
                 </td>
             </tr>
         </tbody>

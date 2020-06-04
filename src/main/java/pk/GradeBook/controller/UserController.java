@@ -12,6 +12,7 @@ import pk.GradeBook.service.UserService;
 import java.util.List;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     public static final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -20,9 +21,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @RequestMapping("/")
+    @RequestMapping("/test")
     private String UsersList(Model model){
-        List<User> userList = service.listAll();
+        List<User> userList = service.findAll();
         model.addAttribute("users", userList);
         return "user";
     }
@@ -36,20 +37,20 @@ public class UserController {
 
     @RequestMapping("/editUser/{id}")
     private String editUser(@PathVariable("id") long id, Model model){
-        User user = service.get(id);
+        User user = service.findById(id);
         model.addAttribute("user", user);
         return "edit_user";
     }
 
     @RequestMapping("/deleteUser/{id}")
     private String deleteUser(@PathVariable("id") long id, Model model){
-        service.delete(id);
-        return "redirect:/";
+        service.deleteById(id);
+        return "redirect:/user/test";
     }
 
     @PostMapping("/saveUser")
     private String saveUser(@ModelAttribute("user") User user){
         service.save(user);
-        return "redirect:/";
+        return "redirect:/user/test";
     }
 }

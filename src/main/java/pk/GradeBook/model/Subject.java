@@ -3,17 +3,17 @@ package pk.GradeBook.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user", catalog = "gradebook")
+@Table(name = "subject", catalog = "gradebook")
 public class Subject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_id")
     private Long subjectId;
-    @Column(name = "class_name")
-    private String nameClass;
     @Column(name = "subject_name")
-    private String nameSubject;
+    private String subjectName;
+    @Column(name = "class_name")
+    private String className;
 
     //TODO: add connections
 
@@ -28,19 +28,19 @@ public class Subject {
         this.subjectId = subjectId;
     }
 
-    public String getNameClass() {
-        return nameClass;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setNameClass(String nameClass) {
-        this.nameClass = nameClass;
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
-    public String getNameSubject() {
-        return nameSubject;
+    public String getClassName() {
+        return className;
     }
 
-    public void setNameSubject(String nameSubject) {
-        this.nameSubject = nameSubject;
+    public void setClassName(String className) {
+        this.className = className;
     }
 }
