@@ -1,6 +1,7 @@
 package pk.GradeBook.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "subject", catalog = "gradebook")
@@ -15,9 +16,42 @@ public class Subject {
     @Column(name = "class_name")
     private String className;
 
-    //TODO: add connections
+    @OneToMany
+    @JoinColumn(name = "subject_id", referencedColumnName = "subject_id")
+    private List<Mark> marks;
+
+    @OneToMany
+    @JoinColumn(name="subject_id", referencedColumnName = "subject_id")
+    private List<Event> events;
+
+    @ManyToMany(mappedBy = "subjects")
+    private List<User> users;
 
     public Subject() {
+    }
+
+    public List<Mark> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<Mark> marks) {
+        this.marks = marks;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public Long getSubjectId() {
