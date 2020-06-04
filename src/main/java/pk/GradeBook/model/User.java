@@ -2,6 +2,7 @@ package pk.GradeBook.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 public class User {
@@ -23,6 +24,13 @@ public class User {
     @Column(name="birth_date")
     private Date birthDate;
     private int perm;
+
+    @OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private List<Mark> marks;
+
+    @ManyToMany
+    private List<Subject> subjects;
 
     public String getEmail() {
         return email;
