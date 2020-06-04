@@ -12,7 +12,7 @@ import pk.GradeBook.repository.MarkRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/marks")
+@RequestMapping("/mark")
 public class MarkController {
 
     //TODO: service instead of repo
@@ -25,6 +25,6 @@ public class MarkController {
     public String listMarks(Model model){
         List<Mark> markList = repo.findAll();
         model.addAttribute("marks", markList);
-        return "marks";
+        return "mark";
     }
 }

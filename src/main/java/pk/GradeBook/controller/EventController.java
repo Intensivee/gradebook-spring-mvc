@@ -10,7 +10,7 @@ import pk.GradeBook.repository.EventRepository;
 
 import java.util.List;
 
-@RequestMapping("/events")
+@RequestMapping("/event")
 @Controller
 public class EventController {
 
@@ -22,6 +22,6 @@ public class EventController {
     private String listEvents(Model model){
         List<Event> eventList = repo.findAll();
         model.addAttribute("events", eventList);
-        return "events";
+        return "event";
     }
 }
