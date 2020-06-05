@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import pk.GradeBook.repository.SubjectRepository;
 
 @Controller
-@RequestMapping("admin//subject")
+@RequestMapping("admin/subject")
 public class SubjectController {
 
     @Autowired

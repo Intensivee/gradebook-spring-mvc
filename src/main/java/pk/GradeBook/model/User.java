@@ -34,9 +34,6 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects;
 
-
-
-
     public String getEmail() {
         return email;
     }

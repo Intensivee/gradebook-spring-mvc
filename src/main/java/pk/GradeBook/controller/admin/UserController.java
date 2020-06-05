@@ -39,6 +39,7 @@ public class UserController {
 
     @RequestMapping("/editUser/{id}")
     private String editUser(@PathVariable("id") long id, Model model){
+        log.info("id nasze: {}", id);
         User user = service.findById(id);
         model.addAttribute("user", user);
         return "edit_user";
@@ -52,6 +53,7 @@ public class UserController {
 
     @PostMapping("/saveUser")
     private String saveUser(@ModelAttribute("user") User user){
+        log.info("id przy save: {}", user.getUserId());
         service.save(user);
         return "redirect:/admin/user/test";
     }
