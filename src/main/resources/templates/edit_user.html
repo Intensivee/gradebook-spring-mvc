@@ -8,12 +8,8 @@
 <div align = "center">
     <h1>Create New User</h1>
     <br/>
-    <form action="#" th:action="@{/user/saveUser}" th:object="${user}" method="post">
+    <form action="#" th:action="@{/admin/user/saveUser}" th:object="${user}" method="post">
         <table border="0" cellpadding="3">
-            <tr>
-                <td>ID:</td>
-                <td><input type="text" th:field="*{userId}" readonly="readonly"/></td>
-            </tr>
             <tr>
                 <td>First Name:</td>
                 <td><input type="text" th:field="*{fName}"/></td>

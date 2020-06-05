@@ -1,4 +1,4 @@
-package pk.GradeBook.controller;
+package pk.GradeBook.controller.admin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +12,7 @@ import pk.GradeBook.repository.MarkRepository;
 import java.util.List;
 
 @Controller
-@RequestMapping("/mark")
+@RequestMapping("admin/mark")
 public class MarkController {
 
     //TODO: service instead of repo
