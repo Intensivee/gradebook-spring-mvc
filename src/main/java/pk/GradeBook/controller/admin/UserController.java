@@ -1,5 +1,7 @@
 package pk.GradeBook.controller.admin;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import java.util.List;
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
+
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService service;
@@ -42,9 +46,7 @@ public class UserController {
 
     @RequestMapping("/deleteUser/{id}")
     private String deleteUser(@PathVariable("id") long id, Model model){
-        System.out.println("ghasd");
         service.deleteById(id);
-        System.out.println("asd");
         return "redirect:test";
     }
 
