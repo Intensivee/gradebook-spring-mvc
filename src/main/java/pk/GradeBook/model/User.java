@@ -30,6 +30,8 @@ public class User {
     private List<Mark> marks;
 
     @ManyToMany
+    @JoinTable(name = "user_subject", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects;
 
 

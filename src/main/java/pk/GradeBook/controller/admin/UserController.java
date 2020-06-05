@@ -47,12 +47,12 @@ public class UserController {
     @RequestMapping("/deleteUser/{id}")
     private String deleteUser(@PathVariable("id") long id, Model model){
         service.deleteById(id);
-        return "redirect:test";
+        return "redirect:/admin/user/test";
     }
 
     @PostMapping("/saveUser")
     private String saveUser(@ModelAttribute("user") User user){
         service.save(user);
-        return "redirect:test";
+        return "redirect:/admin/user/test";
     }
 }
