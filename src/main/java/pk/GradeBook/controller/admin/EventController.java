@@ -1,4 +1,4 @@
-package pk.GradeBook.controller;
+package pk.GradeBook.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import pk.GradeBook.repository.EventRepository;
 
 import java.util.List;
 
-@RequestMapping("/event")
+@RequestMapping("/admin/event")
 @Controller
 public class EventController {
 

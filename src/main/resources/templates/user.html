@@ -10,7 +10,7 @@
 
 <!--    table ma <th> - kolumna i <td> - element-->
     <table border="1" cellpadding="10">
-        <a href="/user/newUser">Create New User</a>
+        <a href="newUser">Create New User</a>
         <thead>
             <tr>
                 <th>User ID</th>
@@ -39,10 +39,10 @@
                 <td th:text="${user.birthDate}">Birth Date</td>
                 <td th:text="${user.perm}">Permission</td>
                 <td>
-                    <a th:href="@{'/user/editUser/' + ${user.userId}}">Edit</a>
+                    <a th:href="@{'editUser/' + ${user.userId}}">Edit</a>
 <!--                    dodaje spacje-->
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a th:href="@{'/user/deleteUser/' + ${user.userId}}">Delete</a>
+                    <a th:href="@{'deleteUser/' + ${user.userId}}">Delete</a>
                 </td>
             </tr>
         </tbody>
