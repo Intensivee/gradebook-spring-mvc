@@ -32,6 +32,9 @@ public class User {
     @ManyToMany
     private List<Subject> subjects;
 
+
+
+
     public String getEmail() {
         return email;
     }
@@ -41,6 +44,19 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(User user){
+        this.userId = user.getUserId();
+        this.fName = user.getfName();
+        this.lName = user.getlName();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.pesel = user.getPesel();
+        this.birthDate = user.getBirthDate();
+        this.perm = user.getPerm();
     }
 
     public Long getUserId() {
