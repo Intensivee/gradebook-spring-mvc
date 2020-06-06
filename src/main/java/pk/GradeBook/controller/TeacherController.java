@@ -23,6 +23,7 @@ import pk.GradeBook.service.UserService;
 public class TeacherController {
 
     private static final Logger log = LoggerFactory.getLogger(TeacherController.class);
+    private static final String prePath = "teacher/";
 
     @Autowired
     private UserService userService;
@@ -30,6 +31,7 @@ public class TeacherController {
     private SubjectRepository subjectRepository;
     @Autowired
     private EventRepository eventRepository;
+
 
     @RequestMapping()
     private String startPage(Model model){
@@ -39,7 +41,7 @@ public class TeacherController {
 
         model.addAttribute("subjects", user.getSubjects());
         model.addAttribute("chosenSubject", new Subject());
-        return "startTeacher";
+        return prePath + "startTeacher";
     }
 
 
@@ -51,21 +53,21 @@ public class TeacherController {
         model.addAttribute("subject", subject);
         model.addAttribute("events", subject.getEvents());
         model.addAttribute("newEvent", new Event());
-        return "eventsManagement";
+        return prePath + "eventsManagement";
     }
 
     @RequestMapping("/deleteEvent/{id}")
     private String deleteEvent(@PathVariable("id") long eventId){
         Long subjectId = eventRepository.getOne(eventId).getSubjectId();
         eventRepository.deleteById(eventId);
-        return "redirect:/teacher/subject/" + subjectId;
+        return "redirect:/teacher/eventManagement/" + subjectId;
     }
 
     @RequestMapping("/saveEvent")
     private String saveEvent(@ModelAttribute("event") Event event){
         eventRepository.save(event);
         Long subjectId = event.getSubjectId();
-        return "redirect:/teacher/subject/" + subjectId;
+        return "redirect:/teacher/eventManagement/" + subjectId;
     }
 
 //    ATTENDANCE CONTROLLERS
@@ -73,7 +75,7 @@ public class TeacherController {
     @RequestMapping("/attendanceManagement/{id}")
     private String attendancePage(@PathVariable("id") Long subjectId, Model model){
         model.addAttribute("subject", subjectRepository.getOne(subjectId));
-        return "attendanceManagement";
+        return prePath + "attendanceManagement";
     }
 
 
@@ -83,6 +85,6 @@ public class TeacherController {
     @RequestMapping("/markManagement/{id}")
     private String marksPage(@PathVariable("id") Long subjectId, Model model){
         model.addAttribute("subject", subjectRepository.getOne(subjectId));
-        return "marksManagement";
+        return prePath + "marksManagement";
     }
 }
