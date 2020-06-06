@@ -15,6 +15,7 @@ import pk.GradeBook.model.MyUserDetails;
 import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.repository.EventRepository;
+import pk.GradeBook.repository.MarkRepository;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
 
@@ -31,6 +32,8 @@ public class TeacherController {
     private SubjectService subjectService;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private MarkRepository markRepository;
 
 
     @RequestMapping()
@@ -84,7 +87,33 @@ public class TeacherController {
 
     @RequestMapping("/markManagement/{id}")
     private String marksPage(@PathVariable("id") Long subjectId, Model model){
-        model.addAttribute("subject", subjectService.findById(subjectId));
+        Subject subject = subjectService.findById(subjectId);
+        model.addAttribute("subject", subject);
+        model.addAttribute("users",subject.getUsers());
+
+//      finding out how many columns for marks should be in view.
+        int maxMarksNumber = 0;
+        for(User user : subject.getUsers()){
+            if(user.getMarks().size() > maxMarksNumber){
+                maxMarksNumber = user.getMarks().size();
+            }
+        }
+        if (maxMarksNumber < 1){
+            maxMarksNumber = 1;
+        }
+        log.info("ilosc ocen: {}", maxMarksNumber);
+        model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
+    }
+
+    @RequestMapping("/deleteMark/{subjectId}/{markId}")
+    private String deleteMark(@PathVariable("subjectId") Long subjectId, @PathVariable("markId") Long markId){
+        markRepository.deleteById(markId);
+        return "redirect:/teacher/markManagement/" + subjectId;
+    }
+
+    @RequestMapping("/addMark/{id}")
+    private String addMark(@PathVariable("id") Long userId){
+        return "Todo";
     }
 }

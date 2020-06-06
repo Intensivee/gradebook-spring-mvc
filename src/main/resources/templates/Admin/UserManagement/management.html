@@ -40,8 +40,6 @@
                 <td th:text="${user.perm}">Permission</td>
                 <td>
                     <a th:href="@{'editUser/' + ${user.userId}}">Edit</a>
-<!--                    dodaje spacje-->
-                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <a th:href="@{'deleteUser/' + ${user.userId}}">Delete</a>
                 </td>
             </tr>

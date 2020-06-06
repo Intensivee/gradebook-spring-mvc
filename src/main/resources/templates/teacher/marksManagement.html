@@ -23,5 +23,31 @@
     </p>
 </div>
 
+<div align="center">
+    <table border="1" cellpadding="10">
+        <thead>
+                <th>First name</th>
+                <th>Second name</th>
+                <th:block th:each="i: ${#numbers.sequence(1, maxMarksNumber+1)}">
+                    <th th:text="'M' + ${i}"></th>
+                </th:block>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.fName}">First name</td>
+                <td th:text="${user.lName}">Second name</td>
+                <span th:each="mark: ${user.marks}">
+                        <td>
+                            <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
+                        </td>
+                </span>
+                <td>
+                    <a th:href="@{'/teacher/addMark/' + ${user.userId}}">Add</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
