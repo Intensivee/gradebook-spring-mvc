@@ -1,35 +1,47 @@
 package pk.GradeBook.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
+import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
 import pk.GradeBook.util.Roles;
 
+import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("admin")
 public class AdminController {
 
-    private static final String prePathManagement = "Admin/AdminManagement/";
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
 
+    private static final String prePathManagement = "Admin/UserManagement/";
+    private static final String prePathUserSubjectManagement = "Admin/SubjectManagement/";
     @Autowired
     UserService userService;
 
+    @Autowired
+    SubjectService subjectService;
+
     @RequestMapping()
     private String startPage(Model model){
-        return prePathManagement + "startAdmin";
+        return "admin/start";
     }
 
-    @RequestMapping("/management")
+    @RequestMapping("/user-management")
     private String managementPage(Model model){
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return prePathManagement + "managementAdmin";
+        return prePathManagement + "management";
     }
 
     @RequestMapping("/newUser")
@@ -40,32 +52,65 @@ public class AdminController {
         model.addAttribute("user", user);
         model.addAttribute("role", role);
         model.addAttribute("roleName", roleName);
-        return prePathManagement + "newUserAdmin";
+        return prePathManagement + "newUser";
     }
 
     @RequestMapping("/editUser/{id}")
     private String editUser(@PathVariable("id") long id, Model model){
         User user = userService.findById(id);
         model.addAttribute("user", user);
-        return prePathManagement + "editUserAdmin";
+        return prePathManagement + "editUser";
     }
 
     @RequestMapping("/saveUser")
     private String saveUser(@ModelAttribute("user") User user){
         userService.save(user);
-        return "redirect:/admin/management";
+        return "redirect:/admin/user-management";
     }
 
     @RequestMapping("/deleteUser/{id}")
-    private String deleteUser(@PathVariable("id") long id, Model model){
+    private String deleteUser(@PathVariable("id") long id){
         userService.deleteById(id);
-        return "redirect:/admin/management";
+        return "redirect:/admin/user-management";
     }
 
-    @RequestMapping("/subjects")
-    private String subjectsPage(Model model){
+    @RequestMapping(value = {"/subject-management", "/subject-management/{id}"})
+    private String subjectManagementPage(@PathVariable(required = false) Long id, Model model){
+        if(id != null)
+        {
+            User user = userService.findById(id);
+            log.info("id usera: {}", user.getUserId());
+            model.addAttribute("userSubjects", user.getSubjects());
+        }
+
+//        Long userJoinId = null;
+//        List<Long> subjectsJoinId = new ArrayList<>();
+//
+//        model.addAttribute("userJoinId", userJoinId);
+//        model.addAttribute("subjectsJoinId", subjectsJoinId);
+
+
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
-        return prePathManagement + "subjectsAdmin";
+
+        Subject addSubject = new Subject();
+        model.addAttribute("subject", addSubject);
+
+        List<Subject> subjects = subjectService.findAll();
+        model.addAttribute("subjects", subjects);
+
+        return prePathUserSubjectManagement + "management";
+    }
+
+    @RequestMapping("/deleteSubject/{id}")
+    private String deleteSubject(@PathVariable("id") long id){
+        subjectService.deleteById(id);
+        return "redirect:/admin/subject-management";
+    }
+
+    @RequestMapping("/saveSubject")
+    private String saveSubject(@ModelAttribute("subject") Subject subject){
+        subjectService.save(subject);
+        return "redirect:/admin/subject-management";
     }
 }
