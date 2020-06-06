@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of subjects</title>
+</head>
+<body>
+<div align="center">
+    <h2>List of subjects</h2>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Subject Id</th>
+            <th>Subject</th>
+            <th>class</th>
+            <th>Go To</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subject : ${subjects}">
+            <td th:text="${subject.subjectId}">Subject ID</td>
+            <td th:text="${subject.subjectName}">Subject</td>
+            <td th:text="${subject.className}">Go to</td>
+            <td>
+                <a th:href="@{'/teacher/eventManagement/' + ${subject.subjectId}}">Select</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
