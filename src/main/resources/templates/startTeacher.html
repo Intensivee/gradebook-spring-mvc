@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>I am teacher</title>
+    <title>List of subjects</title>
 </head>
 <body>
-    <h1>Hi: teacher said.</h1>
+<form action="#" th:action="@{/teacher/eventManagement/1}" method="post">
+    <button type="submit">Save</button>
+</form>
 </body>
 </html>
