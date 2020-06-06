@@ -6,7 +6,6 @@ import pk.GradeBook.model.Subject;
 import pk.GradeBook.repository.SubjectRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SubjectServiceImpl implements SubjectService {
@@ -29,4 +28,13 @@ public class SubjectServiceImpl implements SubjectService {
         return repo.findAll();
     }
 
+    @Override
+    public Subject findById(Long id) {
+        if (repo.findById(id).isPresent()) {
+            return repo.findById(id).get();
+        }
+        else{
+            return new Subject();
+        }
+    }
 }

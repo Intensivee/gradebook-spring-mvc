@@ -15,7 +15,7 @@ import pk.GradeBook.model.MyUserDetails;
 import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.repository.EventRepository;
-import pk.GradeBook.repository.SubjectRepository;
+import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
 
 @Controller
@@ -28,7 +28,7 @@ public class TeacherController {
     @Autowired
     private UserService userService;
     @Autowired
-    private SubjectRepository subjectRepository;
+    private SubjectService subjectService;
     @Autowired
     private EventRepository eventRepository;
 
@@ -49,7 +49,7 @@ public class TeacherController {
 
     @RequestMapping("/eventManagement/{id}")
     private String eventPage(@PathVariable("id") Long subjectId, Model model){
-        Subject subject = subjectRepository.getOne(subjectId);
+        Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
         model.addAttribute("events", subject.getEvents());
         model.addAttribute("newEvent", new Event());
@@ -74,7 +74,7 @@ public class TeacherController {
 
     @RequestMapping("/attendanceManagement/{id}")
     private String attendancePage(@PathVariable("id") Long subjectId, Model model){
-        model.addAttribute("subject", subjectRepository.getOne(subjectId));
+        model.addAttribute("subject", subjectService.findById(subjectId));
         return prePath + "attendanceManagement";
     }
 
@@ -84,7 +84,7 @@ public class TeacherController {
 
     @RequestMapping("/markManagement/{id}")
     private String marksPage(@PathVariable("id") Long subjectId, Model model){
-        model.addAttribute("subject", subjectRepository.getOne(subjectId));
+        model.addAttribute("subject", subjectService.findById(subjectId));
         return prePath + "marksManagement";
     }
 }
