@@ -14,4 +14,6 @@ public interface UserService {
 
     void deleteById(Long id);
 
+    List<User> fetchStudentUsers(List<User> users);
+
 }

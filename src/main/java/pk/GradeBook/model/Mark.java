@@ -1,5 +1,7 @@
 package pk.GradeBook.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -20,6 +22,7 @@ public class Mark {
     @Column(name = "late")
     private int late;
     @Column(name = "mark_date")
+    @CreationTimestamp // otherwise app throw null exception in adding new mark.
     private Date markDate;
     @Column(name = "grade")
     private float grade;

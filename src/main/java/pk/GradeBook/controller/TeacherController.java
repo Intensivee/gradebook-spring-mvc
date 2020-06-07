@@ -10,13 +10,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pk.GradeBook.model.Event;
-import pk.GradeBook.model.MyUserDetails;
-import pk.GradeBook.model.Subject;
-import pk.GradeBook.model.User;
+import pk.GradeBook.model.*;
 import pk.GradeBook.repository.EventRepository;
+import pk.GradeBook.service.MarkService;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("teacher")
@@ -31,6 +31,8 @@ public class TeacherController {
     private SubjectService subjectService;
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private MarkService markService;
 
 
     @RequestMapping()
@@ -82,9 +84,45 @@ public class TeacherController {
 
 //    MARKS CONTROLLERS
 
-    @RequestMapping("/markManagement/{id}")
-    private String marksPage(@PathVariable("id") Long subjectId, Model model){
-        model.addAttribute("subject", subjectService.findById(subjectId));
+    @RequestMapping({"/markManagement/{subjectId}", "/markManagement/{subjectId}/{userId}"})
+    private String marksPage(@PathVariable("subjectId") Long subjectId, @PathVariable(required = false, value = "userId") Long userId, Model model){
+        Subject subject = subjectService.findById(subjectId);
+        model.addAttribute("subject", subject);
+        List<User> users = subject.getUsers();
+        model.addAttribute("users", userService.fetchStudentUsers(users));
+
+//      not required value (if present, view show add new mark to specified user)
+        if(userId != null){
+            model.addAttribute("addMarkUserId", userId);
+            Mark newMark = new Mark();
+            newMark.setUserId(userId);
+            newMark.setSubjectId(subjectId);
+            model.addAttribute("mark", newMark);
+        }
+
+//      finding out how many columns for marks should be in view.
+        int maxMarksNumber = 0;
+        for(User user : subject.getUsers()){
+            if(user.getMarks().size() > maxMarksNumber){
+                maxMarksNumber = user.getMarks().size();
+            }
+        }
+        if (maxMarksNumber < 1){
+            maxMarksNumber = 1;
+        }
+        model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
+    }
+
+    @RequestMapping("/deleteMark/{subjectId}/{markId}")
+    private String deleteMark(@PathVariable("subjectId") Long subjectId, @PathVariable("markId") Long markId){
+        markService.deleteById(markId);
+        return "redirect:/teacher/markManagement/" + subjectId;
+    }
+
+    @RequestMapping("/addMark")
+    private String addMark(@ModelAttribute("mark") Mark mark){
+        markService.save(mark);
+        return "redirect:/teacher/markManagement/" + mark.getSubjectId();
     }
 }
