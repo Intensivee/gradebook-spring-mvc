@@ -28,7 +28,7 @@
         <thead>
                 <th>First name</th>
                 <th>Second name</th>
-                <th:block th:each="i: ${#numbers.sequence(1, maxMarksNumber+1)}">
+                <th:block th:each="i: ${#numbers.sequence(1, 5)}">
                     <th th:text="'M' + ${i}"></th>
                 </th:block>
         </thead>
@@ -42,11 +42,34 @@
                         </td>
                 </span>
                 <td>
-                    <a th:href="@{'/teacher/addMark/' + ${user.userId}}">Add</a>
+                    <a th:href="@{'/teacher/markManagement/' + ${subject.subjectId} + '/' + ${user.userId}}">Add</a>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<div align="center" th:if="${addMarkUserId}">
+    <form action="#" th:action="@{/teacher/addMark}" th:object="${mark}" method="post">
+        <table border="0" cellpadding="3">
+            <tr>
+                <td>User id:</td>
+                <td><input type="text" th:field="*{userId}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>Subject id:</td>
+                <td><input type="text" th:field="*{subjectId}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>Grade:</td>
+                <td><input type="text" th:field="*{grade}"/></td>
+            </tr>
+
+            <tr align = "center">
+                <td colspan="2"><button type="Add">Save</button></td>
+            </tr>
+        </table>
+    </form>
 </div>
 
 </body>

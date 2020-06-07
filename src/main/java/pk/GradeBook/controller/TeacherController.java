@@ -10,10 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pk.GradeBook.model.Event;
-import pk.GradeBook.model.MyUserDetails;
-import pk.GradeBook.model.Subject;
-import pk.GradeBook.model.User;
+import pk.GradeBook.model.*;
 import pk.GradeBook.repository.EventRepository;
 import pk.GradeBook.repository.MarkRepository;
 import pk.GradeBook.service.SubjectService;
@@ -85,11 +82,20 @@ public class TeacherController {
 
 //    MARKS CONTROLLERS
 
-    @RequestMapping("/markManagement/{id}")
-    private String marksPage(@PathVariable("id") Long subjectId, Model model){
+    @RequestMapping({"/markManagement/{subjectId}", "/markManagement/{subjectId}/{userId}"})
+    private String marksPage(@PathVariable("subjectId") Long subjectId, @PathVariable(required = false, value = "userId") Long userId, Model model){
         Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
         model.addAttribute("users",subject.getUsers());
+
+//      not required value (if present, view show add new mark to specified user)
+        if(userId != null){
+            model.addAttribute("addMarkUserId", userId);
+            Mark newMark = new Mark();
+            newMark.setUserId(userId);
+            newMark.setSubjectId(subjectId);
+            model.addAttribute("mark", newMark);
+        }
 
 //      finding out how many columns for marks should be in view.
         int maxMarksNumber = 0;
@@ -101,8 +107,6 @@ public class TeacherController {
         if (maxMarksNumber < 1){
             maxMarksNumber = 1;
         }
-        log.info("ilosc ocen: {}", maxMarksNumber);
-        model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
     }
 
@@ -112,8 +116,9 @@ public class TeacherController {
         return "redirect:/teacher/markManagement/" + subjectId;
     }
 
-    @RequestMapping("/addMark/{id}")
-    private String addMark(@PathVariable("id") Long userId){
-        return "Todo";
+    @RequestMapping("/addMark")
+    private String addMark(@ModelAttribute("mark") Mark mark){
+        markRepository.save(mark);
+        return "redirect:/teacher/markManagement/" + mark.getSubjectId();
     }
 }
