@@ -53,12 +53,8 @@
     <form action="#" th:action="@{/teacher/addMark}" th:object="${mark}" method="post">
         <table border="0" cellpadding="3">
             <tr>
-                <td>User id:</td>
-                <td><input type="text" th:field="*{userId}" readonly="readonly"/></td>
-            </tr>
-            <tr>
-                <td>Subject id:</td>
-                <td><input type="text" th:field="*{subjectId}" readonly="readonly"/></td>
+                <td style="display: none;"><input type="text" th:field="*{userId}" readonly="readonly"/></td>
+                <td style="display: none;" ><input type="text" th:field="*{subjectId}" readonly="readonly"/></td>
             </tr>
             <tr>
                 <td>Grade:</td>

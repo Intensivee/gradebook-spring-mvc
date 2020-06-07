@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div align="center">
+    <h2>
+        <td>Lesson: </td>
+        <td th:text="${LessonNumber+1}"></td>
+    </h2>
+
+    <div align="center">
+        <p>
+            <a th:href="@{'/teacher/attendanceManagement/' + ${subject.subjectId}}">Go Back</a>
+        </p>
+    </div>
+
+    <table border="1" cellpadding="10">
+        <thead>
+        <th>Name</th>
+        <th>Second name</th>
+        <th>Presence</th>
+        <th>Action</th>
+        </thead>
+        <tbody>
+        <tr th:each="user,iter : ${users}">
+            <td th:text="${user.lName}">Name</td>
+            <td th:text="${user.fName}">Second name</td>
+<!--            attendances is list of list of attendances of order users-->
+            <span th:each="attendance,iterr : ${attendances[iter.index]}">
+                <div th:if="${LessonNumber} == ${iterr.index}">
+                    <td th:text="${attendance.presence}">Presence</td>
+                    <td>
+                        <a th:href="@{'/teacher/attendanceSwitch/' + ${subject.subjectId} + '/' + ${LessonNumber} + '/' + ${attendance.attendanceId}}">switch</a>
+                    </td>
+                </div>
+            </span>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

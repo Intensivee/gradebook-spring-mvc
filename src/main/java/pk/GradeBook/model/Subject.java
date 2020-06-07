@@ -34,6 +34,14 @@ public class Subject {
     public Subject() {
     }
 
+    public List<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(List<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
     public List<Mark> getMarks() {
         return marks;
     }

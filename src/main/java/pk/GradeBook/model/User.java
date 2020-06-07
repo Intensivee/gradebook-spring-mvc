@@ -62,6 +62,14 @@ public class User {
         this.perm = user.getPerm();
     }
 
+    public List<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(List<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
     public List<Mark> getMarks() {
         return marks;
     }

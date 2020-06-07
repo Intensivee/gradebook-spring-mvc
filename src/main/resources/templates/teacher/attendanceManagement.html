@@ -23,5 +23,31 @@
     </p>
 </div>
 
+<div align="center">
+    <p>
+        <a th:href="@{'/teacher/newAttendance/' + ${subject.subjectId}}">Add new</a>
+    </p>
+</div>
+
+<div align="center" th:if="${maxAttendanceNumber} != 0">
+    <table border="1" cellpadding="10">
+        <thead>
+        <th>Lesson </th>
+        <th>Date</th>
+        <th>Action</th>
+        </thead>
+        <tbody>
+        <tr th:each="attendance,iter : ${attendances}">
+            <td th:text="${iter.index+1}">Lesson</td>
+            <td th:text="${attendance.attendanceDate}">Date</td>
+            <td>
+                <a th:href="@{'/teacher/attendanceEdit/' + ${subject.subjectId} + '/' + ${iter.index}}">Edit presence</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
+

@@ -14,4 +14,6 @@ public interface AttendanceService {
 
     List<Attendance> findAll();
 
+    List<Attendance> fetchSubjectAttendances(List<Attendance> attendances , Long subjectId);
+
 }
