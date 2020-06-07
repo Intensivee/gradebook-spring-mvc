@@ -25,11 +25,12 @@
         <th>Action</th>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
+        <tr th:each="user,iter : ${users}">
             <td th:text="${user.lName}">Name</td>
             <td th:text="${user.fName}">Second name</td>
-            <span th:each="attendance,iter : ${user.attendances}">
-                <div th:if="${LessonNumber} == ${iter.index}">
+<!--            attendances is list of list of attendances of order users-->
+            <span th:each="attendance,iterr : ${attendances[iter.index]}">
+                <div th:if="${LessonNumber} == ${iterr.index}">
                     <td th:text="${attendance.presence}">Presence</td>
                     <td>
                         <a th:href="@{'/teacher/attendanceSwitch/' + ${subject.subjectId} + '/' + ${LessonNumber} + '/' + ${attendance.attendanceId}}">switch</a>

@@ -17,6 +17,7 @@ import pk.GradeBook.service.MarkService;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -103,7 +104,13 @@ public class TeacherController {
     private String attendanceEdit(@PathVariable("subjectId") Long subjectId, @PathVariable("LessonNumber") int lessonNumber, Model model){
         Subject subject = subjectService.findById(subjectId);
         List<User> users = subject.getUsers();
-        model.addAttribute("users", userService.fetchStudentUsers(users));
+        users = userService.fetchStudentUsers(users);
+        model.addAttribute("users", users);
+        List<List<Attendance>> attendances = new ArrayList<>();
+        for(User user : users){
+            attendances.add(attendanceService.fetchSubjectAttendances(user.getAttendances(), subjectId));
+        }
+        model.addAttribute("attendances", attendances);
         model.addAttribute("subject", subject);
         model.addAttribute("LessonNumber", lessonNumber);
         return prePath + "EditAttendance";
@@ -139,8 +146,13 @@ public class TeacherController {
             attendance.setSubjectId(subjectId);
             attendanceService.save(attendance);
         }
-//      index of new attendance
-        int lessonNumber = users.get(0).getAttendances().size() - 1;
+
+//        getting attendances of first user in subject
+        List<Attendance> userAttendances = users.get(0).getAttendances();
+//        getting attendances of specified subject
+        userAttendances = attendanceService.fetchSubjectAttendances(userAttendances, subjectId);
+//        getting index of last attendance (new lesson)
+        int lessonNumber = userAttendances.size() - 1;
         model.addAttribute("users", users);
         model.addAttribute("subject", subject);
         return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + lessonNumber;
