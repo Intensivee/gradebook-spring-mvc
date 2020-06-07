@@ -13,7 +13,6 @@ import pk.GradeBook.service.UserService;
 import pk.GradeBook.util.JoinUserSubject;
 import pk.GradeBook.util.Roles;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -55,9 +54,14 @@ public class AdminController {
     }
 
     @RequestMapping("/editUser/{id}")
-    private String editUser(@PathVariable("id") long id, Model model){
+    private String editUser(@PathVariable("id") Long id, Model model){
+        List<String> role = Arrays.asList(Roles.ROLE_STUDENT, Roles.ROLE_TEACHER, Roles.ROLE_ADMIN);
+        List<String> roleName = Arrays.asList(Roles.ROLE_STUDENT_NAME, Roles.ROLE_TEACHER_NAME, Roles.ROLE_ADMIN_NAME);
         User user = userService.findById(id);
+        log.info("user_id = {}", id);
         model.addAttribute("user", user);
+        model.addAttribute("role", role);
+        model.addAttribute("roleName", roleName);
         return prePathManagement + "editUser";
     }
 
@@ -68,7 +72,7 @@ public class AdminController {
     }
 
     @RequestMapping("/deleteUser/{id}")
-    private String deleteUser(@PathVariable("id") long id){
+    private String deleteUser(@PathVariable("id") Long id){
         userService.deleteById(id);
         return "redirect:/admin/user-management";
     }
@@ -98,7 +102,7 @@ public class AdminController {
     }
 
     @RequestMapping("/deleteSubject/{id}")
-    private String deleteSubject(@PathVariable("id") long id){
+    private String deleteSubject(@PathVariable("id") Long id){
         subjectService.deleteById(id);
         return "redirect:/admin/subject-management";
     }
@@ -110,11 +114,39 @@ public class AdminController {
     }
 
     @RequestMapping("/joinUserSubject/{id}")
-    private String joinUserSubject(@PathVariable("id") long id, Model model){
+    private String joinUserSubjectPanel(@PathVariable("id") Long id, Model model){
         User user = userService.findById(id);
         model.addAttribute("user", user);
-        model.addAttribute("userSubjects", user.getSubjects());
+
+        Subject addSubject = new Subject();
+        model.addAttribute("subject", addSubject);
+
+        List<Subject> subjects = subjectService.findAll();
+        model.addAttribute("subjects", subjects);
 
         return prePathUserSubjectManagement + "joinUserSubject";
     }
+
+    @RequestMapping("/addUserSubject/{userId}/{subjectId}")
+    private String addUserSubject(@PathVariable("userId") Long userId, @PathVariable("subjectId") Long subjectId, Model model){
+        User user = userService.findById(userId);
+
+        Subject subject = subjectService.findById(subjectId);
+        userService.addSubject(user, subject);
+        userService.save(user);
+        return "redirect:/admin/joinUserSubject/" + userId;
+    }
+
+    @RequestMapping("/delUserSubject/{userId}/{subjectId}")
+    private String delUserSubject(@PathVariable("userId") Long userId, @PathVariable("subjectId") Long subjectId, Model model){
+        User user = userService.findById(userId);
+        Subject subject = subjectService.findById(subjectId);
+        userService.deleteSubject(user, subject);
+        userService.save(user);
+        return "redirect:/admin/joinUserSubject/" + userId;
+    }
+
+
+
+
 }
