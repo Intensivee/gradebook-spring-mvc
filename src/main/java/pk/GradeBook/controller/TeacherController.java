@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pk.GradeBook.model.*;
 import pk.GradeBook.repository.EventRepository;
+import pk.GradeBook.service.AttendanceService;
 import pk.GradeBook.service.MarkService;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
@@ -33,6 +34,8 @@ public class TeacherController {
     private EventRepository eventRepository;
     @Autowired
     private MarkService markService;
+    @Autowired
+    private AttendanceService attendanceService;
 
 
     @RequestMapping()
@@ -72,13 +75,57 @@ public class TeacherController {
         return "redirect:/teacher/eventManagement/" + subjectId;
     }
 
+
+
 //    ATTENDANCE CONTROLLERS
 
     @RequestMapping("/attendanceManagement/{id}")
     private String attendancePage(@PathVariable("id") Long subjectId, Model model){
-        model.addAttribute("subject", subjectService.findById(subjectId));
+        Subject subject = subjectService.findById(subjectId);
+
+//      finding out how many columns for attendances should be in view.
+        int maxAttendanceNumber = 0;
+        List<User> users = subject.getUsers();
+        for(User user : users){
+            if(user.getAttendances().size() > maxAttendanceNumber){
+                maxAttendanceNumber = user.getAttendances().size();
+            }
+        }
+        log.info("attendances: {}", maxAttendanceNumber);
+        model.addAttribute("maxAttendanceNumber", maxAttendanceNumber);
+        model.addAttribute("subject", subject);
+        model.addAttribute("attendances", users.get(0).getAttendances());
+
         return prePath + "attendanceManagement";
     }
+
+    @RequestMapping("/attendanceEdit/{subjectId}/{LessonNumber}")
+    private String attendanceEdit(@PathVariable("subjectId") Long subjectId, @PathVariable("LessonNumber") int lessonNumber, Model model){
+        Subject subject = subjectService.findById(subjectId);
+        List<User> users = subject.getUsers();
+        model.addAttribute("users", userService.fetchStudentUsers(users));
+        model.addAttribute("subject", subject);
+        model.addAttribute("LessonNumber", lessonNumber);
+        return prePath + "EditAttendance";
+    }
+
+    @RequestMapping("attendanceSwitch/{subjectId}/{LessonNumber}/{attendanceId}")
+    private String switchAttendance(@PathVariable("subjectId") Long subjectId,
+                                    @PathVariable("LessonNumber") Long LessonNumber,
+                                    @PathVariable("attendanceId") Long attendanceId,
+                                    Model model){
+        Subject subject = subjectService.findById(subjectId);
+        Attendance attendance = attendanceService.findById(attendanceId);
+        if(attendance.getPresence() == 0){
+            attendance.setPresence(1);
+        }
+        else{
+            attendance.setPresence(0);
+        }
+        attendanceService.save(attendance);
+        return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + LessonNumber;
+    }
+
 
 
 
