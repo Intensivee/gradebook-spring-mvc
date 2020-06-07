@@ -12,8 +12,4 @@ public interface MarkService {
     Mark findById(Long id);
 
     List<Mark> findAll();
-
-    List<Mark> fetchGradeMarks(List<Mark> marks);
-
-    List<Mark> fetchAttendanceMarks(List<Mark> marks);
 }

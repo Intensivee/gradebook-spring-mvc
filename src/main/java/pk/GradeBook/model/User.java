@@ -29,6 +29,10 @@ public class User {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private List<Mark> marks;
 
+    @OneToMany
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private List<Attendance> attendances;
+
     @ManyToMany
     @JoinTable(name = "user_subject", joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "subject_id"))

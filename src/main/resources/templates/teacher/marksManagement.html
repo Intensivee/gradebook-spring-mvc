@@ -38,9 +38,7 @@
                 <td th:text="${user.lName}">Second name</td>
                 <span th:each="mark: ${user.marks}">
                         <td>
-                            <div align="center" th:if="${mark.grade} != -1">
-                                <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
-                            </div>
+                            <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
                         </td>
                 </span>
                 <td>
