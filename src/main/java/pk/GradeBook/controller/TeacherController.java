@@ -9,11 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pk.GradeBook.model.*;
-import pk.GradeBook.repository.EventRepository;
-import pk.GradeBook.service.AttendanceService;
-import pk.GradeBook.service.MarkService;
-import pk.GradeBook.service.SubjectService;
-import pk.GradeBook.service.UserService;
+import pk.GradeBook.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,7 @@ public class TeacherController {
     @Autowired
     private SubjectService subjectService;
     @Autowired
-    private EventRepository eventRepository;
+    private EventService eventService;
     @Autowired
     private MarkService markService;
     @Autowired
@@ -62,14 +58,14 @@ public class TeacherController {
 
     @GetMapping("/deleteEvent/{id}")
     private String deleteEvent(@PathVariable("id") long eventId){
-        Long subjectId = eventRepository.getOne(eventId).getSubjectId();
-        eventRepository.deleteById(eventId);
+        Long subjectId = eventService.findById(eventId).getSubjectId();
+        eventService.deleteById(eventId);
         return "redirect:/teacher/eventManagement/" + subjectId;
     }
 
     @PostMapping("/saveEvent")
     private String saveEvent(@ModelAttribute("event") Event event){
-        eventRepository.save(event);
+        eventService.save(event);
         Long subjectId = event.getSubjectId();
         return "redirect:/teacher/eventManagement/" + subjectId;
     }
