@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pk.GradeBook.model.Attendance;
 import pk.GradeBook.repository.AttendanceRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,6 +37,17 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<Attendance> findAll() {
         return repo.findAll();
+    }
+
+    @Override
+    public List<Attendance> fetchSubjectAttendances(List<Attendance> attendances, Long subjectId) {
+        List<Attendance> fetchedAttendances = new ArrayList<Attendance>();
+        for(Attendance attendance : attendances){
+            if(attendance.getSubjectId() == subjectId){
+                fetchedAttendances.add(attendance);
+            }
+        }
+        return fetchedAttendances;
     }
 
 }

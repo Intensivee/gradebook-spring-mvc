@@ -23,6 +23,11 @@
     </p>
 </div>
 
+<div align="center">
+    <p>
+        <a th:href="@{'/teacher/newAttendance/' + ${subject.subjectId}}">Add new</a>
+    </p>
+</div>
 
 <div align="center" th:if="${maxAttendanceNumber} != 0">
     <table border="1" cellpadding="10">

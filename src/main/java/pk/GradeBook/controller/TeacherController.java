@@ -91,10 +91,10 @@ public class TeacherController {
                 maxAttendanceNumber = user.getAttendances().size();
             }
         }
-        log.info("attendances: {}", maxAttendanceNumber);
+        List<Attendance> attendances = users.get(0).getAttendances();
         model.addAttribute("maxAttendanceNumber", maxAttendanceNumber);
         model.addAttribute("subject", subject);
-        model.addAttribute("attendances", users.get(0).getAttendances());
+        model.addAttribute("attendances", attendanceService.fetchSubjectAttendances(attendances, subjectId));
 
         return prePath + "attendanceManagement";
     }
@@ -124,6 +124,26 @@ public class TeacherController {
         }
         attendanceService.save(attendance);
         return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + LessonNumber;
+    }
+
+    @RequestMapping("newAttendance/{subjectId}")
+    private String newLesson(@PathVariable("subjectId") Long subjectId, Model model){
+        Subject subject = subjectService.findById(subjectId);
+        List<User> users = subject.getUsers();
+        users = userService.fetchStudentUsers(users);
+
+        for (User user : users) {
+            Attendance attendance = new Attendance();
+            attendance.setPresence(0);
+            attendance.setUserId(user.getUserId());
+            attendance.setSubjectId(subjectId);
+            attendanceService.save(attendance);
+        }
+//      index of new attendance
+        int lessonNumber = users.get(0).getAttendances().size() - 1;
+        model.addAttribute("users", users);
+        model.addAttribute("subject", subject);
+        return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + lessonNumber;
     }
 
 
