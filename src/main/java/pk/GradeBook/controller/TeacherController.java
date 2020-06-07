@@ -7,9 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pk.GradeBook.model.*;
 import pk.GradeBook.repository.EventRepository;
 import pk.GradeBook.service.AttendanceService;
@@ -39,7 +37,7 @@ public class TeacherController {
     private AttendanceService attendanceService;
 
 
-    @RequestMapping()
+    @GetMapping()
     private String startPage(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         MyUserDetails loggedUser = (MyUserDetails)authentication.getPrincipal();
@@ -53,7 +51,7 @@ public class TeacherController {
 
 //    EVENTS CONTROLLERS
 
-    @RequestMapping("/eventManagement/{id}")
+    @GetMapping("/eventManagement/{id}")
     private String eventPage(@PathVariable("id") Long subjectId, Model model){
         Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
@@ -62,14 +60,14 @@ public class TeacherController {
         return prePath + "eventsManagement";
     }
 
-    @RequestMapping("/deleteEvent/{id}")
+    @GetMapping("/deleteEvent/{id}")
     private String deleteEvent(@PathVariable("id") long eventId){
         Long subjectId = eventRepository.getOne(eventId).getSubjectId();
         eventRepository.deleteById(eventId);
         return "redirect:/teacher/eventManagement/" + subjectId;
     }
 
-    @RequestMapping("/saveEvent")
+    @PostMapping("/saveEvent")
     private String saveEvent(@ModelAttribute("event") Event event){
         eventRepository.save(event);
         Long subjectId = event.getSubjectId();
@@ -80,7 +78,7 @@ public class TeacherController {
 
 //    ATTENDANCE CONTROLLERS
 
-    @RequestMapping("/attendanceManagement/{id}")
+    @GetMapping("/attendanceManagement/{id}")
     private String attendancePage(@PathVariable("id") Long subjectId, Model model){
         Subject subject = subjectService.findById(subjectId);
 
@@ -100,7 +98,7 @@ public class TeacherController {
         return prePath + "attendanceManagement";
     }
 
-    @RequestMapping("/attendanceEdit/{subjectId}/{LessonNumber}")
+    @GetMapping("/attendanceEdit/{subjectId}/{LessonNumber}")
     private String attendanceEdit(@PathVariable("subjectId") Long subjectId, @PathVariable("LessonNumber") int lessonNumber, Model model){
         Subject subject = subjectService.findById(subjectId);
         List<User> users = subject.getUsers();
@@ -116,7 +114,7 @@ public class TeacherController {
         return prePath + "EditAttendance";
     }
 
-    @RequestMapping("attendanceSwitch/{subjectId}/{LessonNumber}/{attendanceId}")
+    @GetMapping("attendanceSwitch/{subjectId}/{LessonNumber}/{attendanceId}")
     private String switchAttendance(@PathVariable("subjectId") Long subjectId,
                                     @PathVariable("LessonNumber") Long LessonNumber,
                                     @PathVariable("attendanceId") Long attendanceId,
@@ -133,7 +131,7 @@ public class TeacherController {
         return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + LessonNumber;
     }
 
-    @RequestMapping("newAttendance/{subjectId}")
+    @GetMapping("newAttendance/{subjectId}")
     private String newLesson(@PathVariable("subjectId") Long subjectId, Model model){
         Subject subject = subjectService.findById(subjectId);
         List<User> users = subject.getUsers();
@@ -163,7 +161,7 @@ public class TeacherController {
 
 //    MARKS CONTROLLERS
 
-    @RequestMapping({"/markManagement/{subjectId}", "/markManagement/{subjectId}/{userId}"})
+    @GetMapping({"/markManagement/{subjectId}", "/markManagement/{subjectId}/{userId}"})
     private String marksPage(@PathVariable("subjectId") Long subjectId, @PathVariable(required = false, value = "userId") Long userId, Model model){
         Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
@@ -193,13 +191,13 @@ public class TeacherController {
         return prePath + "marksManagement";
     }
 
-    @RequestMapping("/deleteMark/{subjectId}/{markId}")
+    @GetMapping("/deleteMark/{subjectId}/{markId}")
     private String deleteMark(@PathVariable("subjectId") Long subjectId, @PathVariable("markId") Long markId){
         markService.deleteById(markId);
         return "redirect:/teacher/markManagement/" + subjectId;
     }
 
-    @RequestMapping("/addMark")
+    @PostMapping("/addMark")
     private String addMark(@ModelAttribute("mark") Mark mark){
         markService.save(mark);
         return "redirect:/teacher/markManagement/" + mark.getSubjectId();
