@@ -43,6 +43,7 @@
 
         <tbody>
         <tr th:each="user : ${users}">
+
             <td th:text="${user.perm}"></td>
             <td th:text="${user.fName}"></td>
             <td th:text="${user.lName}"></td>
@@ -53,7 +54,9 @@
                 <a th:href="@{'/admin/subject-management/' + ${user.userId}}">Show</a>
             </td>
 
-            <!-- <td align = "center"><input type="radio" th:field="*{perm}" th:value="${user.userId}"></td> -->
+            <td>
+                <a th:href="@{'/admin/joinUserSubject/' + ${user.userId}}">Add subject</a>
+            </td>
 
         </tr>
         </tbody>

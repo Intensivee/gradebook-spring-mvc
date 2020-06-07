@@ -10,13 +10,12 @@ import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
+import pk.GradeBook.util.JoinUserSubject;
 import pk.GradeBook.util.Roles;
 
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("admin")
@@ -79,16 +78,12 @@ public class AdminController {
         if(id != null)
         {
             User user = userService.findById(id);
-            log.info("id usera: {}", user.getUserId());
             model.addAttribute("userSubjects", user.getSubjects());
         }
 
-//        Long userJoinId = null;
-//        List<Long> subjectsJoinId = new ArrayList<>();
-//
-//        model.addAttribute("userJoinId", userJoinId);
-//        model.addAttribute("subjectsJoinId", subjectsJoinId);
-
+        JoinUserSubject joinUserSubject = new JoinUserSubject();
+        model.addAttribute("joinUserSubject", joinUserSubject);
+        log.info("id: {}", joinUserSubject.joinUserId);
 
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
@@ -112,5 +107,14 @@ public class AdminController {
     private String saveSubject(@ModelAttribute("subject") Subject subject){
         subjectService.save(subject);
         return "redirect:/admin/subject-management";
+    }
+
+    @RequestMapping("/joinUserSubject/{id}")
+    private String joinUserSubject(@PathVariable("id") long id, Model model){
+        User user = userService.findById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("userSubjects", user.getSubjects());
+
+        return prePathUserSubjectManagement + "joinUserSubject";
     }
 }
