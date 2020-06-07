@@ -28,7 +28,7 @@
         <thead>
                 <th>First name</th>
                 <th>Second name</th>
-                <th:block th:each="i: ${#numbers.sequence(1, 5)}">
+                <th:block th:each="i: ${#numbers.sequence(1, maxMarksNumber+1)}">
                     <th th:text="'M' + ${i}"></th>
                 </th:block>
         </thead>
@@ -38,7 +38,9 @@
                 <td th:text="${user.lName}">Second name</td>
                 <span th:each="mark: ${user.marks}">
                         <td>
-                            <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
+                            <div align="center" th:if="${mark.grade} != -1">
+                                <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
+                            </div>
                         </td>
                 </span>
                 <td>

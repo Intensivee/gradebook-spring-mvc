@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pk.GradeBook.model.*;
 import pk.GradeBook.repository.EventRepository;
-import pk.GradeBook.repository.MarkRepository;
+import pk.GradeBook.service.MarkService;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("teacher")
@@ -30,7 +32,7 @@ public class TeacherController {
     @Autowired
     private EventRepository eventRepository;
     @Autowired
-    private MarkRepository markRepository;
+    private MarkService markService;
 
 
     @RequestMapping()
@@ -86,7 +88,8 @@ public class TeacherController {
     private String marksPage(@PathVariable("subjectId") Long subjectId, @PathVariable(required = false, value = "userId") Long userId, Model model){
         Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
-        model.addAttribute("users",subject.getUsers());
+        List<User> users = subject.getUsers();
+        model.addAttribute("users", userService.fetchStudentUsers(users));
 
 //      not required value (if present, view show add new mark to specified user)
         if(userId != null){
@@ -107,18 +110,19 @@ public class TeacherController {
         if (maxMarksNumber < 1){
             maxMarksNumber = 1;
         }
+        model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
     }
 
     @RequestMapping("/deleteMark/{subjectId}/{markId}")
     private String deleteMark(@PathVariable("subjectId") Long subjectId, @PathVariable("markId") Long markId){
-        markRepository.deleteById(markId);
+        markService.deleteById(markId);
         return "redirect:/teacher/markManagement/" + subjectId;
     }
 
     @RequestMapping("/addMark")
     private String addMark(@ModelAttribute("mark") Mark mark){
-        markRepository.save(mark);
+        markService.save(mark);
         return "redirect:/teacher/markManagement/" + mark.getSubjectId();
     }
 }

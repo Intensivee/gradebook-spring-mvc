@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pk.GradeBook.model.User;
 import pk.GradeBook.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,5 +38,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Long id) {
         repo.deleteById(id);
+    }
+
+    @Override
+    public List<User> fetchStudentUsers(List<User> users) {
+        List<User> fetchedUsers = new ArrayList<User>();
+        for (User user : users) {
+            if (user.getPerm() == 0) {
+                fetchedUsers.add(user);
+            }
+        }
+        return fetchedUsers;
     }
 }
