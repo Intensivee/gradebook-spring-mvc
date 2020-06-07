@@ -5,8 +5,11 @@
     <title>User-Subject management</title>
 </head>
 <body>
-<div align = "center">
+<div align="center">
+    <a th:href="@{'/admin'}">BACK</a>
     <h1>User-Subject management</h1>
+</div>
+<div align = "center">
     <form action="#" th:action="@{/admin/saveSubject}" th:object="${subject}" method="post">
         <table border="0" cellpadding="3">
             <tr>
@@ -16,7 +19,7 @@
 
             <tr>
                 <td>Class name:</td>
-                <td><input type="text" th:field="*{className}"/></td>
+                <td><p align="centre"><input type="text" th:field="*{className}"/></p></td>
             </tr>
 
             <tr align = "center">
@@ -28,7 +31,7 @@
 </div>
 
 <div>
-    <table align="left" border="1" cellpadding="10" style="width:700px;height:500px;overflow:auto;display:block;">
+    <table align="left" border="1" cellpadding="10" style="width:650px;height:500px;overflow:auto;display:block;">
         <thead>
         <tr>
             <th>Role</th>
@@ -55,7 +58,7 @@
             </td>
 
             <td>
-                <a th:href="@{'/admin/joinUserSubject/' + ${user.userId}}">Add subject</a>
+                <a th:href="@{'/admin/joinUserSubject/' + ${user.userId}}">Edit subjects</a>
             </td>
 
         </tr>
@@ -73,7 +76,7 @@
         <tbody>
             <tr th:each="subj : ${subjects}">
                 <td th:text="${subj.subjectName}">Subject Name</td>
-                <td style="width:35px;" th:text="${subj.className}">Class name</td>
+                <td th:text="${subj.className}">Class name</td>
                 <td>
                     <a th:href="@{'/admin/deleteSubject/' + ${subj.subjectId}}">Delete</a>
                 </td>
@@ -93,7 +96,7 @@
         <tbody>
         <tr th:each="userSubject : ${userSubjects}">
             <td th:text="${userSubject.subjectName}">Subject Name</td>
-            <td style="width:35px;" th:text="${userSubject.className}">Class name</td>
+            <td th:text="${userSubject.className}">Class name</td>
         </tr>
         </tbody>
     </table>

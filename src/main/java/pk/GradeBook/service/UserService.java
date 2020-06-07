@@ -1,5 +1,6 @@
 package pk.GradeBook.service;
 
+import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 
 import java.util.List;
@@ -16,4 +17,7 @@ public interface UserService {
 
     List<User> fetchStudentUsers(List<User> users);
 
+    void addSubject(User user, Subject subject);
+
+    void deleteSubject(User user, Subject subject);
 }

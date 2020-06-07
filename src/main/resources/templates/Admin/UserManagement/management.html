@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <title>User Manager</title>
 </head>
+<div align="center">
+    <a style="color:black;font-family:'Courier New'" th:href="@{'/admin'}">BACK</a>
+</div>
 <body>
 <div align="center">
     <h1>User Manager</h1>
 
 <!--    table ma <th> - kolumna i <td> - element-->
     <table border="1" cellpadding="10">
-        <a href="newUser">Create New User</a>
+        <a style="color:black;font-family:'Courier New'" href="newUser">Create new user</a>
         <thead>
             <tr>
                 <th>User ID</th>
@@ -39,8 +42,8 @@
                 <td th:text="${user.birthDate}">Birth Date</td>
                 <td th:text="${user.perm}">Permission</td>
                 <td>
-                    <a th:href="@{'editUser/' + ${user.userId}}">Edit</a>
-                    <a th:href="@{'deleteUser/' + ${user.userId}}">Delete</a>
+                    <a style="color:green;font-family:'Courier New'" th:href="@{'editUser/' + ${user.userId}}">Edit</a>
+                    <a style="color:red;font-family:'Courier New'" th:href="@{'deleteUser/' + ${user.userId}}">Delete</a>
                 </td>
             </tr>
         </tbody>

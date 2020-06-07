@@ -14,13 +14,8 @@ public class Mark {
     private Long userId;
     @Column(name = "subject_id")
     private Long subjectId;
-//    @Column(name = "mark_date")
-//    @CreationTimestamp // otherwise app throw null exception in adding new mark.
-//    private Date markDate;
     @Column(name = "grade")
     private float grade;
-
-    //TODO: add connections
 
     public Mark() {
     }

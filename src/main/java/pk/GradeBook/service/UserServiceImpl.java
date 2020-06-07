@@ -2,6 +2,7 @@ package pk.GradeBook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.repository.UserRepository;
 
@@ -49,5 +50,15 @@ public class UserServiceImpl implements UserService {
             }
         }
         return fetchedUsers;
+    }
+
+    @Override
+    public void addSubject(User user, Subject subject) {
+        user.getSubjects().add(subject);
+    }
+
+    @Override
+    public void deleteSubject(User user, Subject subject) {
+        user.getSubjects().remove(subject);
     }
 }

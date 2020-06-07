@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>joinUserSubject</title>
+    <title>Join users with subjects</title>
 </head>
 <body>
+    <div align="center">
+        <a th:href="@{'/admin/subject-management/'}">BACK</a>
+        <h1>To user:</h1>
+    </div>
+<div>
+    <table align="center" border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td th:text="${user.perm}"></td>
+                <td th:text="${user.fName}"></td>
+                <td th:text="${user.lName}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    <h2 align="center">Add subject:</h2>
+
+    <table align="center" border="1" cellpadding="10" style="width:300px;height:500px;overflow:auto;display:block;">
+        <thead>
+        <tr>
+            <th>Subject name</th>
+            <th>Class name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subj : ${subjects}">
+            <td th:text="${subj.subjectName}">Subject Name</td>
+            <td style="width:35px;" th:text="${subj.className}">Class name</td>
+            <td>
+                <a style="color:blue;font-family:'Courier New';" th:if="${!user.getSubjects().contains(subj)}"  th:href="@{'/admin/addUserSubject/' + ${user.userId} + '/' + ${subj.subjectId}}">Add</a>
+                <a style="color:red;font-family:'Courier New'" th:if="${user.getSubjects().contains(subj)}" th:href="@{'/admin/delUserSubject/' + ${user.userId} + '/' + ${subj.subjectId}}">Del</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
 
 </body>
 </html>
