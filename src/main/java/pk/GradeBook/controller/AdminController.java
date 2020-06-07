@@ -10,7 +10,6 @@ import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
-import pk.GradeBook.util.JoinUserSubject;
 import pk.GradeBook.util.Roles;
 
 import java.util.Arrays;
@@ -84,10 +83,6 @@ public class AdminController {
             User user = userService.findById(id);
             model.addAttribute("userSubjects", user.getSubjects());
         }
-
-        JoinUserSubject joinUserSubject = new JoinUserSubject();
-        model.addAttribute("joinUserSubject", joinUserSubject);
-        log.info("id: {}", joinUserSubject.joinUserId);
 
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
