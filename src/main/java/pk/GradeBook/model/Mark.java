@@ -1,9 +1,6 @@
 package pk.GradeBook.model;
 
-import org.hibernate.annotations.CreationTimestamp;
-
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "mark", catalog = "gradebook")
@@ -17,13 +14,9 @@ public class Mark {
     private Long userId;
     @Column(name = "subject_id")
     private Long subjectId;
-    @Column(name = "attendance")
-    private int attendance;
-    @Column(name = "late")
-    private int late;
-    @Column(name = "mark_date")
-    @CreationTimestamp // otherwise app throw null exception in adding new mark.
-    private Date markDate;
+//    @Column(name = "mark_date")
+//    @CreationTimestamp // otherwise app throw null exception in adding new mark.
+//    private Date markDate;
     @Column(name = "grade")
     private float grade;
 
@@ -64,27 +57,12 @@ public class Mark {
         this.grade = grade;
     }
 
-    public Date getMarkDate() {
-        return markDate;
-    }
+//    public Date getMarkDate() {
+//        return markDate;
+//    }
+//
+//    public void setMarkDate(Date markDate) {
+//        this.markDate = markDate;
+//    }
 
-    public void setMarkDate(Date markDate) {
-        this.markDate = markDate;
-    }
-
-    public int getAttendance() {
-        return attendance;
-    }
-
-    public void setAttendance(int attendance) {
-        this.attendance = attendance;
-    }
-
-    public int getLate() {
-        return late;
-    }
-
-    public void setLate(int late) {
-        this.late = late;
-    }
 }

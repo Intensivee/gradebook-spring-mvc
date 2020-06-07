@@ -2,20 +2,20 @@ package pk.GradeBook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pk.GradeBook.model.Mark;
-import pk.GradeBook.repository.MarkRepository;
+import pk.GradeBook.model.Attendance;
+import pk.GradeBook.repository.AttendanceRepository;
 
 import java.util.List;
 
 @Service
-public class MarkServiceImpl implements MarkService{
+public class AttendanceServiceImpl implements AttendanceService{
 
     @Autowired
-    private MarkRepository repo;
+    AttendanceRepository repo;
 
     @Override
-    public void save(Mark   mark) {
-        repo.save(mark);
+    public void save(Attendance attendance) {
+        repo.save(attendance);
     }
 
     @Override
@@ -24,17 +24,17 @@ public class MarkServiceImpl implements MarkService{
     }
 
     @Override
-    public Mark findById(Long id) {
+    public Attendance findById(Long id) {
         if (repo.findById(id).isPresent()) {
             return repo.findById(id).get();
         }
         else{
-            return new Mark();
+            return new Attendance();
         }
     }
 
     @Override
-    public List<Mark> findAll() {
+    public List<Attendance> findAll() {
         return repo.findAll();
     }
 

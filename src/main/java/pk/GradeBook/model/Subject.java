@@ -21,6 +21,10 @@ public class Subject {
     private List<Mark> marks;
 
     @OneToMany
+    @JoinColumn(name = "subject_id", referencedColumnName = "subject_id")
+    private List<Attendance> attendances;
+
+    @OneToMany
     @JoinColumn(name="subject_id", referencedColumnName = "subject_id")
     private List<Event> events;
 
