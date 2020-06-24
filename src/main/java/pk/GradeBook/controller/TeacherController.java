@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pk.GradeBook.model.*;
 import pk.GradeBook.service.*;
+import pk.GradeBook.util.Factory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,9 @@ public class TeacherController {
 
     private static final Logger log = LoggerFactory.getLogger(TeacherController.class);
     private static final String prePath = "teacher/";
+
+    @Autowired
+    private Factory factory;
 
     @Autowired
     private UserService userService;
@@ -40,7 +44,7 @@ public class TeacherController {
         User user = userService.findById(loggedUser.getUserId());
 
         model.addAttribute("subjects", user.getSubjects());
-        model.addAttribute("chosenSubject", new Subject());
+        model.addAttribute("chosenSubject", factory.newSubject());
         return prePath + "startTeacher";
     }
 
@@ -52,7 +56,7 @@ public class TeacherController {
         Subject subject = subjectService.findById(subjectId);
         model.addAttribute("subject", subject);
         model.addAttribute("events", subject.getEvents());
-        model.addAttribute("newEvent", new Event());
+        model.addAttribute("newEvent",  factory.newEvent());
         return prePath + "eventsManagement";
     }
 
@@ -134,7 +138,7 @@ public class TeacherController {
         users = userService.fetchStudentUsers(users);
 
         for (User user : users) {
-            Attendance attendance = new Attendance();
+            Attendance attendance = factory.newAttendance();
             attendance.setPresence(0);
             attendance.setUserId(user.getUserId());
             attendance.setSubjectId(subjectId);
@@ -167,7 +171,7 @@ public class TeacherController {
 //      not required value (if present, view show add new mark to specified user)
         if(userId != null){
             model.addAttribute("addMarkUserId", userId);
-            Mark newMark = new Mark();
+            Mark newMark = factory.newMark();
             newMark.setUserId(userId);
             newMark.setSubjectId(subjectId);
             model.addAttribute("mark", newMark);

@@ -10,6 +10,7 @@ import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
 import pk.GradeBook.service.SubjectService;
 import pk.GradeBook.service.UserService;
+import pk.GradeBook.util.Factory;
 import pk.GradeBook.util.Roles;
 
 import java.util.Arrays;
@@ -24,10 +25,13 @@ public class AdminController {
     private static final String prePathManagement = "Admin/UserManagement/";
     private static final String prePathUserSubjectManagement = "Admin/SubjectManagement/";
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    SubjectService subjectService;
+    private SubjectService subjectService;
+
+    @Autowired
+    private Factory factory;
 
     @RequestMapping()
     private String startPage(Model model){
@@ -45,7 +49,7 @@ public class AdminController {
     private String createNewUser(Model model){
         List<String> role = Arrays.asList(Roles.ROLE_STUDENT, Roles.ROLE_TEACHER, Roles.ROLE_ADMIN);
         List<String> roleName = Arrays.asList(Roles.ROLE_STUDENT_NAME, Roles.ROLE_TEACHER_NAME, Roles.ROLE_ADMIN_NAME);
-        User user = new User();
+        User user = factory.newUser();
         model.addAttribute("user", user);
         model.addAttribute("role", role);
         model.addAttribute("roleName", roleName);
@@ -57,7 +61,6 @@ public class AdminController {
         List<String> role = Arrays.asList(Roles.ROLE_STUDENT, Roles.ROLE_TEACHER, Roles.ROLE_ADMIN);
         List<String> roleName = Arrays.asList(Roles.ROLE_STUDENT_NAME, Roles.ROLE_TEACHER_NAME, Roles.ROLE_ADMIN_NAME);
         User user = userService.findById(id);
-        log.info("user_id = {}", id);
         model.addAttribute("user", user);
         model.addAttribute("role", role);
         model.addAttribute("roleName", roleName);
@@ -87,7 +90,7 @@ public class AdminController {
         List<User> users = userService.findAll();
         model.addAttribute("users", users);
 
-        Subject addSubject = new Subject();
+        Subject addSubject =  factory.newSubject();
         model.addAttribute("subject", addSubject);
 
         List<Subject> subjects = subjectService.findAll();
@@ -113,7 +116,7 @@ public class AdminController {
         User user = userService.findById(id);
         model.addAttribute("user", user);
 
-        Subject addSubject = new Subject();
+        Subject addSubject = factory.newSubject();
         model.addAttribute("subject", addSubject);
 
         List<Subject> subjects = subjectService.findAll();
