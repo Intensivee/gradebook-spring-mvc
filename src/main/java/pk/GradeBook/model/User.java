@@ -2,6 +2,7 @@ package pk.GradeBook.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -156,5 +157,15 @@ public class User {
 
     public void setPerm(int perm) {
         this.perm = perm;
+    }
+
+    public List<Float> getMarksBySubjectId(Long subjectId){
+        List<Float> fetchedMarks = new ArrayList<>();
+        for(Mark mark: this.marks){
+            if(mark.getSubjectId().equals(subjectId)){
+                fetchedMarks.add(mark.getGrade());
+            }
+        }
+        return fetchedMarks;
     }
 }

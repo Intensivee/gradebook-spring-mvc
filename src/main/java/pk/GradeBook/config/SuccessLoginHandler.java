@@ -22,7 +22,8 @@ public class SuccessLoginHandler implements AuthenticationSuccessHandler {
         // TODO: 1 iteration o.o
         for(GrantedAuthority auth : authentication.getAuthorities()){
             if(Roles.ROLE_STUDENT.equals(auth.getAuthority())){
-                httpServletResponse.sendRedirect("/student");
+                httpServletResponse.sendRedirect("student/events");
+                // student/eventsManagement is a main students main page
             }
             if(Roles.ROLE_TEACHER.equals(auth.getAuthority())){
                 httpServletResponse.sendRedirect("/teacher");
