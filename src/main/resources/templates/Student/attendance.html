@@ -17,21 +17,21 @@
 
 <div align="center">
     <p>
-        <a th:href="@{'/student/events'}">Events</a>
-        <!--<a th:href="@{'/teacher/markManagement/' + ${subject.subjectId}}">Marks</a>-->
+        <a style="color:red;font-family:'Courier New'" th:href="@{'/student/events'}">Events</a>
+        <a style="color:green;font-family:'Courier New'" th:href="@{'/student/marks'}">Marks</a>
     </p>
 </div>
 
 <div align="center">
-    <h3>Event list</h3>
+    <h3>Attendance list</h3>
 
     <!--    table ma <th> - kolumna i <td> - element-->
     <table border="1" cellpadding="10">
         <thead>
         <tr>
             <th>Subject & Class</th>
-            <th:block th:each="i: ${#numbers.sequence(1, marksLen)}">
-                <th th:text="'M' + ${i}"></th>
+            <th:block th:each="i: ${#numbers.sequence(1, attendanceLen)}">
+                <th th:text="'L' + ${i}"></th>
             </th:block>
         </tr>
         </thead>
@@ -39,8 +39,8 @@
             <span th:each="subject : ${subjects}">
                 <tr>
                     <td th:text="${subject.subjectName} + ' ' + ${subject.className}">Subject & Class</td>
-                    <td th:each="grade: ${user.getMarksBySubjectId(subject.getSubjectId())}">
-                        <a th:text="${grade}"></a>
+                    <td th:each="attendance: ${user.getAttendanceBySubjectId(subject.getSubjectId())}">
+                        <a th:text="${attendance.getPresence()}"></a>
                     </td>
                 </tr>
             </span>

@@ -16,10 +16,10 @@
 </div>
 
 <div align="center">
+    <a style="color:black;font-family:'Courier New'" href="/teacher">Go Back</a>
     <p>
-        <a th:href="@{'/teacher/markManagement/' + ${subject.subjectId}}">Marks</a>
-        <a th:href="@{'/teacher/eventManagement/' + ${subject.subjectId}}">Events</a>
-        <a href="/teacher">Go Back</a>
+        <a style="color:green;font-family:'Courier New'" th:href="@{'/teacher/markManagement/' + ${subject.subjectId}}">Marks</a>
+        <a style="color:red;font-family:'Courier New'" th:href="@{'/teacher/eventManagement/' + ${subject.subjectId}}">Events</a>
     </p>
 </div>
 
@@ -41,7 +41,7 @@
             <td th:text="${iter.index+1}">Lesson</td>
             <td th:text="${attendance.attendanceDate}">Date</td>
             <td>
-                <a th:href="@{'/teacher/attendanceEdit/' + ${subject.subjectId} + '/' + ${iter.index}}">Edit presence</a>
+                <a style="color:black;font-family:'Courier New'" th:href="@{'/teacher/attendanceEdit/' + ${subject.subjectId} + '/' + ${iter.index}}">Edit presence</a>
             </td>
         </tr>
         </tbody>

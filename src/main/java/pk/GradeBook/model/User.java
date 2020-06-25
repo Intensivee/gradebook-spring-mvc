@@ -61,6 +61,9 @@ public class User {
         this.pesel = user.getPesel();
         this.birthDate = user.getBirthDate();
         this.perm = user.getPerm();
+        this.marks = user.getMarks();
+        this.attendances = user.getAttendances();
+        this.subjects = user.getSubjects();
     }
 
     public List<Attendance> getAttendances() {
@@ -167,5 +170,15 @@ public class User {
             }
         }
         return fetchedMarks;
+    }
+
+    public List<Attendance> getAttendanceBySubjectId(Long subjectId){
+        List<Attendance> fetchedAttendance = new ArrayList<>();
+        for(Attendance attendance: this.attendances){
+            if(attendance.getSubjectId().equals(subjectId)){
+                fetchedAttendance.add(attendance);
+            }
+        }
+        return fetchedAttendance;
     }
 }

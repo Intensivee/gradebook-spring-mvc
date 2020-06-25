@@ -6,7 +6,7 @@
 </head>
 <body>
     <div align="center">
-        <a th:href="@{'/admin/subject-management/'}">BACK</a>
+        <a style="color:black;font-family:'Courier New'" th:href="@{'/admin/subject-management/'}">BACK</a>
         <h1>To user:</h1>
     </div>
 <div>
@@ -43,7 +43,7 @@
             <td th:text="${subj.subjectName}">Subject Name</td>
             <td style="width:35px;" th:text="${subj.className}">Class name</td>
             <td>
-                <a style="color:blue;font-family:'Courier New';" th:if="${!user.getSubjects().contains(subj)}"  th:href="@{'/admin/addUserSubject/' + ${user.userId} + '/' + ${subj.subjectId}}">Add</a>
+                <a style="color:green;font-family:'Courier New';" th:if="${!user.getSubjects().contains(subj)}"  th:href="@{'/admin/addUserSubject/' + ${user.userId} + '/' + ${subj.subjectId}}">Add</a>
                 <a style="color:red;font-family:'Courier New'" th:if="${user.getSubjects().contains(subj)}" th:href="@{'/admin/delUserSubject/' + ${user.userId} + '/' + ${subj.subjectId}}">Del</a>
             </td>
 
