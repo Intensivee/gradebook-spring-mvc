@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pk.GradeBook.model.Attendance;
 import pk.GradeBook.model.MyUserDetails;
 import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
@@ -68,5 +69,19 @@ public class StudentController {
         return prePath + "marks";
     }
 
+    @GetMapping("/attendances")
+    private String attendancePage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails loggedUser = (MyUserDetails)authentication.getPrincipal();
 
+        User user = userService.findById(loggedUser.getUserId());
+        model.addAttribute("user", user);
+
+        List<Attendance> attendances = user.getAttendances();
+        model.addAttribute("attendances", attendances);
+
+        model.addAttribute("attendanceLen", user.getMarks().size());
+
+        return prePath + "attendance";
+    }
 }

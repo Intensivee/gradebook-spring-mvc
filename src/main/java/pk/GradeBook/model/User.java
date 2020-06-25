@@ -159,11 +159,11 @@ public class User {
         this.perm = perm;
     }
 
-    public List<Float> getMarksBySubjectId(Long subjectId){
-        List<Float> fetchedMarks = new ArrayList<>();
+    public List<Mark> getMarksBySubjectId(Long subjectId){
+        List<Mark> fetchedMarks = new ArrayList<>();
         for(Mark mark: this.marks){
             if(mark.getSubjectId().equals(subjectId)){
-                fetchedMarks.add(mark.getGrade());
+                fetchedMarks.add(mark);
             }
         }
         return fetchedMarks;
