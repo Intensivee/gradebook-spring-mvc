@@ -169,7 +169,6 @@ public class TeacherController {
 
 //      finding out how many columns for marks should be in view.
         int maxMarksNumber = markService.maxMarksInSubjectStudents(subject);
-        log.info("HALO: {}", maxMarksNumber);
         model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
     }
