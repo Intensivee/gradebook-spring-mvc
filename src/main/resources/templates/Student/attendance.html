@@ -2,7 +2,7 @@
 <html xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Marks</title>
+    <title>Attendances</title>
 </head>
 
 <div align="center">
@@ -39,8 +39,8 @@
             <span th:each="subject : ${subjects}">
                 <tr>
                     <td th:text="${subject.subjectName} + ' ' + ${subject.className}">Subject & Class</td>
-                    <td th:each="marks: ${user.getMarksBySubjectId(subject.getSubjectId())}">
-                        <a th:text="${marks.getGrade()}"></a>
+                    <td th:each="grade: ${user.getMarksBySubjectId(subject.getSubjectId())}">
+                        <a th:text="${grade}"></a>
                     </td>
                 </tr>
             </span>
