@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
         return repo.findAll();
     }
 
+
     @Override
     public void save(User user) {
         repo.save(user);
@@ -63,6 +64,17 @@ public class UserServiceImpl implements UserService {
         user.getSubjects().remove(subject);
     }
 
+    @Override
+    public int maxAttendancesOfUsers(List<User> users) {
+        int maxAttendanceNumber = 0;
+        for(User user : users){
+            if(user.getAttendances().size() > maxAttendanceNumber){
+                maxAttendanceNumber = user.getAttendances().size();
+            }
+        }
+        return maxAttendanceNumber;
+    }
+  
     @Override
     public int getMarksLenBySubjectId(List<Subject> subjects, User user) {
         int max = 0;

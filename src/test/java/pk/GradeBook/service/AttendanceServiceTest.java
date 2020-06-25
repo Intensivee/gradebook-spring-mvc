@@ -20,10 +20,7 @@ class AttendanceServiceTest {
     private AttendanceServiceImpl attendanceService;
 
     @Autowired
-    Factory factory;
-
-
-    private static final Logger log = LoggerFactory.getLogger(AttendanceServiceTest.class);
+    private Factory factory;
 
     @Test
     void fetchSubjectAttendances() throws Exception{
@@ -38,4 +35,15 @@ class AttendanceServiceTest {
         assertEquals(response.size(), 1);
     }
 
+    @Test
+    void switchPresence() throws Exception{
+        Attendance attendance1 = factory.newAttendance();
+        Attendance attendance2 = factory.newAttendance();
+        attendance1.setPresence(0);
+        attendance2.setPresence(1);
+        attendanceService.switchPresence(attendance1);
+        attendanceService.switchPresence(attendance2);
+        assertEquals(attendance1.getPresence(), 1);
+        assertEquals(attendance2.getPresence(), 0);
+    }
 }

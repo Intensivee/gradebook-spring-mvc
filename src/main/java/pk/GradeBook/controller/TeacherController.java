@@ -81,15 +81,10 @@ public class TeacherController {
     @GetMapping("/attendanceManagement/{id}")
     private String attendancePage(@PathVariable("id") Long subjectId, Model model){
         Subject subject = subjectService.findById(subjectId);
-
-//      finding out how many columns for attendances should be in view.
-        int maxAttendanceNumber = 0;
         List<User> users = subject.getUsers();
-        for(User user : users){
-            if(user.getAttendances().size() > maxAttendanceNumber){
-                maxAttendanceNumber = user.getAttendances().size();
-            }
-        }
+//      finding out how many columns for attendances should be in view.
+        int maxAttendanceNumber = users.get(0).getAttendances().size();
+
         List<Attendance> attendances = users.get(0).getAttendances();
         model.addAttribute("maxAttendanceNumber", maxAttendanceNumber);
         model.addAttribute("subject", subject);
@@ -105,9 +100,9 @@ public class TeacherController {
         users = userService.fetchStudentUsers(users);
         model.addAttribute("users", users);
         List<List<Attendance>> attendances = new ArrayList<>();
-        for(User user : users){
+        for(User user : users)
             attendances.add(attendanceService.fetchSubjectAttendances(user.getAttendances(), subjectId));
-        }
+
         model.addAttribute("attendances", attendances);
         model.addAttribute("subject", subject);
         model.addAttribute("LessonNumber", lessonNumber);
@@ -121,12 +116,7 @@ public class TeacherController {
                                     Model model){
         Subject subject = subjectService.findById(subjectId);
         Attendance attendance = attendanceService.findById(attendanceId);
-        if(attendance.getPresence() == 0){
-            attendance.setPresence(1);
-        }
-        else{
-            attendance.setPresence(0);
-        }
+        attendanceService.switchPresence(attendance);
         attendanceService.save(attendance);
         return "redirect:/teacher/attendanceEdit/" + subjectId + "/" + LessonNumber;
     }
@@ -178,15 +168,8 @@ public class TeacherController {
         }
 
 //      finding out how many columns for marks should be in view.
-        int maxMarksNumber = 0;
-        for(User user : subject.getUsers()){
-            if(user.getMarks().size() > maxMarksNumber){
-                maxMarksNumber = user.getMarks().size();
-            }
-        }
-        if (maxMarksNumber < 1){
-            maxMarksNumber = 1;
-        }
+        int maxMarksNumber = markService.maxMarksInSubjectStudents(subject);
+        log.info("HALO: {}", maxMarksNumber);
         model.addAttribute("maxMarksNumber", maxMarksNumber);
         return prePath + "marksManagement";
     }

@@ -16,4 +16,6 @@ public interface AttendanceService {
 
     List<Attendance> fetchSubjectAttendances(List<Attendance> attendances , Long subjectId);
 
+    void switchPresence(Attendance attendance);
+
 }
