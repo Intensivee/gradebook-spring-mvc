@@ -20,9 +20,7 @@ Panel Studenta:
 - przegląd wydarzeń przypisanych z poszczególnych przedmiotów ucznia
 
 
-
-
-Przykładowe dane do logowania:
+Przykładowe dane do logowania dla przygotowanego dumpa gradebook.sql:
 
 ADMIN:
 ID: 22
