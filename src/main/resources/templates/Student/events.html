@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Events</title>
+</head>
+
+<div align="center">
+    <a style="color:black;font-family:'Courier New'" href="/login">Log out</a>
+</div>
+
+<body>
+
+    <div align="center">
+        <h1 th:text="${user.fName} + ' ' + ${user.lName}"></h1>
+    </div>
+
+    <div align="center">
+        <p>
+            <a th:href="@{'/student/marks'}">Marks</a>
+            <!--<a th:href="@{'/teacher/markManagement/' + ${subject.subjectId}}">Marks</a>-->
+        </p>
+    </div>
+
+<div align="center">
+    <h3>Event list</h3>
+
+    <!--    table ma <th> - kolumna i <td> - element-->
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Subject & Class</th>
+            <th>Event note</th>
+        </tr>
+        </thead>
+        <tbody>
+            <span th:each="subject : ${subjects}">
+                <tr th:each="event: ${subject.getEvents()}">
+                    <td th:text="${subject.subjectName} + ' ' + ${subject.className}">Subject & Class</td>
+                    <td th:text="${event.eventNote}">Event note</td>
+                </tr>
+            </span>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

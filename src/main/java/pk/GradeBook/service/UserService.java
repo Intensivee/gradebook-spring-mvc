@@ -22,4 +22,6 @@ public interface UserService {
     void deleteSubject(User user, Subject subject);
 
     int maxAttendancesOfUsers(List<User> users);
+  
+    int getMarksLenBySubjectId(List<Subject> subjects, User user);
 }
