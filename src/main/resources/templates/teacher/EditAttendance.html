@@ -13,7 +13,7 @@
 
     <div align="center">
         <p>
-            <a th:href="@{'/teacher/attendanceManagement/' + ${subject.subjectId}}">Go Back</a>
+            <a style="color:black;font-family:'Courier New'" th:href="@{'/teacher/attendanceManagement/' + ${subject.subjectId}}">Go Back</a>
         </p>
     </div>
 
@@ -33,7 +33,7 @@
                 <div th:if="${LessonNumber} == ${iterr.index}">
                     <td th:text="${attendance.presence}">Presence</td>
                     <td>
-                        <a th:href="@{'/teacher/attendanceSwitch/' + ${subject.subjectId} + '/' + ${LessonNumber} + '/' + ${attendance.attendanceId}}">switch</a>
+                        <a style="color:black;font-family:'Courier New'" th:href="@{'/teacher/attendanceSwitch/' + ${subject.subjectId} + '/' + ${LessonNumber} + '/' + ${attendance.attendanceId}}">switch</a>
                     </td>
                 </div>
             </span>

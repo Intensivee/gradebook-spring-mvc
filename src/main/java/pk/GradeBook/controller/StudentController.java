@@ -77,10 +77,11 @@ public class StudentController {
         User user = userService.findById(loggedUser.getUserId());
         model.addAttribute("user", user);
 
-        List<Attendance> attendances = user.getAttendances();
-        model.addAttribute("attendances", attendances);
+        List<Subject> subjects = user.getSubjects();
+        model.addAttribute("subjects", subjects);
 
-        model.addAttribute("attendanceLen", user.getMarks().size());
+
+        model.addAttribute("attendanceLen", user.getAttendances().size());
 
         return prePath + "attendance";
     }

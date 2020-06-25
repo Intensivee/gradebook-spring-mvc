@@ -6,7 +6,7 @@
 </head>
 <body>
 <div align="center">
-    <a th:href="@{'/admin'}">BACK</a>
+    <a style="color:black;font-family:'Courier New'" th:href="@{'/admin'}">BACK</a>
     <h1>User-Subject management</h1>
 </div>
 <div align = "center">
@@ -54,11 +54,11 @@
             <td th:text="${user.birthDate}"></td>
 
             <td>
-                <a th:href="@{'/admin/subject-management/' + ${user.userId}}">Show</a>
+                <a style="color:blue;font-family:'Courier New'" th:href="@{'/admin/subject-management/' + ${user.userId}}">Show</a>
             </td>
 
             <td>
-                <a th:href="@{'/admin/joinUserSubject/' + ${user.userId}}">Edit subjects</a>
+                <a style="color:black;font-family:'Courier New'" th:href="@{'/admin/joinUserSubject/' + ${user.userId}}">Edit subjects</a>
             </td>
 
         </tr>
@@ -78,7 +78,7 @@
                 <td th:text="${subj.subjectName}">Subject Name</td>
                 <td th:text="${subj.className}">Class name</td>
                 <td>
-                    <a th:href="@{'/admin/deleteSubject/' + ${subj.subjectId}}">Delete</a>
+                    <a style="color:red;font-family:'Courier New'" th:href="@{'/admin/deleteSubject/' + ${subj.subjectId}}">Delete</a>
                 </td>
             </tr>
         </tbody>
@@ -86,7 +86,7 @@
 </div>
 
 <div>
-    <table align="center" border="1" cellpadding="10" style="width:250px;height:500px;overflow:auto;display:block;">
+    <table align="center" border="1" cellpadding="10" style="width:220px;height:500px;overflow:auto;display:block;">
         <thead>
         <tr>
             <th>Subject name</th>

@@ -16,10 +16,10 @@
 </div>
 
 <div align="center">
+    <a style="color:black;font-family:'Courier New'" href="/teacher">Go Back</a>
     <p>
-        <a th:href="@{'/teacher/attendanceManagement/' + ${subject.subjectId}}">Attendance</a>
-        <a th:href="@{'/teacher/eventManagement/' + ${subject.subjectId}}">Events</a>
-        <a href="/teacher">Go Back</a>
+        <a style="color:blue;font-family:'Courier New'" th:href="@{'/teacher/attendanceManagement/' + ${subject.subjectId}}">Attendance</a>
+        <a style="color:red;font-family:'Courier New'" th:href="@{'/teacher/eventManagement/' + ${subject.subjectId}}">Events</a>
     </p>
 </div>
 
@@ -38,11 +38,11 @@
                 <td th:text="${user.lName}">Second name</td>
                 <span th:each="mark: ${user.getMarksBySubjectId(subject.subjectId)}">
                         <td>
-                            <a th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
+                            <a style="color:black;font-family:'Courier New'" th:text="${mark.grade}" th:href="@{'/teacher/deleteMark/' + ${subject.subjectId} + '/' + ${mark.markId}}"></a>
                         </td>
                 </span>
                 <td>
-                    <a th:href="@{'/teacher/markManagement/' + ${subject.subjectId} + '/' + ${user.userId}}">Add</a>
+                    <a style="color:green;font-family:'Courier New'" th:href="@{'/teacher/markManagement/' + ${subject.subjectId} + '/' + ${user.userId}}">Add</a>
                 </td>
             </tr>
         </tbody>
