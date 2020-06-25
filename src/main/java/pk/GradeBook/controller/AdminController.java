@@ -24,6 +24,7 @@ public class AdminController {
 
     private static final String prePathManagement = "Admin/UserManagement/";
     private static final String prePathUserSubjectManagement = "Admin/SubjectManagement/";
+
     @Autowired
     private UserService userService;
 
