@@ -2,6 +2,7 @@ package pk.GradeBook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pk.GradeBook.model.Attendance;
 import pk.GradeBook.model.Mark;
 import pk.GradeBook.model.Subject;
 import pk.GradeBook.model.User;
@@ -78,17 +79,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getMarksLenBySubjectId(List<Subject> subjects, User user) {
         int max = 0;
-        List<Float> fetchedMarks = new ArrayList<>();
+        List<Mark> fetchedMarks = new ArrayList<>();
         for(Subject subject: subjects){
             for(Mark mark: user.getMarks()){
                 if(mark.getSubjectId().equals(subject.getSubjectId())){
-                    fetchedMarks.add(mark.getGrade());
+                    fetchedMarks.add(mark);
                 }
             }
             if(max < fetchedMarks.size()){
                 max = fetchedMarks.size();
             }
             fetchedMarks.clear();
+        }
+        return max;
+    }
+
+    @Override
+    public int getAttendanceLenBySubjectId(List<Subject> subjects, User user) {
+        int max = 0;
+        List<Attendance> fetchedAttendances = new ArrayList<>();
+        for(Subject subject: subjects){
+            for(Attendance attendance: user.getAttendances()){
+                if(attendance.getSubjectId().equals(subject.getSubjectId())){
+                    fetchedAttendances.add(attendance);
+                }
+            }
+            if(max < fetchedAttendances.size()){
+                max = fetchedAttendances.size();
+            }
+            fetchedAttendances.clear();
         }
         return max;
     }

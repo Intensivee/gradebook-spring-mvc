@@ -24,4 +24,6 @@ public interface UserService {
     int maxAttendancesOfUsers(List<User> users);
   
     int getMarksLenBySubjectId(List<Subject> subjects, User user);
+
+    int getAttendanceLenBySubjectId(List<Subject> subjects, User user);
 }

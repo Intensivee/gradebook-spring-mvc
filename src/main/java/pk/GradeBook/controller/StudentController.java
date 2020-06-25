@@ -81,7 +81,7 @@ public class StudentController {
         model.addAttribute("subjects", subjects);
 
 
-        model.addAttribute("attendanceLen", user.getAttendances().size());
+        model.addAttribute("attendanceLen", userService.getAttendanceLenBySubjectId(subjects, user));
 
         return prePath + "attendance";
     }
