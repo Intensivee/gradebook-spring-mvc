@@ -20,4 +20,6 @@ public interface UserService {
     void addSubject(User user, Subject subject);
 
     void deleteSubject(User user, Subject subject);
+
+    int maxAttendancesOfUsers(List<User> users);
 }

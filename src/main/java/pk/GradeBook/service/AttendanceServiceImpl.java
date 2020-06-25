@@ -50,4 +50,13 @@ public class AttendanceServiceImpl implements AttendanceService{
         return fetchedAttendances;
     }
 
+    @Override
+    public void switchPresence(Attendance attendance) {
+        if(attendance.getPresence() == 0){
+            attendance.setPresence(1);
+        }
+        else{
+            attendance.setPresence(0);
+        }
+    }
 }
